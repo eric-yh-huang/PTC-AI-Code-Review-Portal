@@ -100,11 +100,28 @@ steps:
             <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">1</span> 前往 <strong>Project Settings</strong> (專案設定)。<br>
             <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">2</span> 在左側選單點擊 <strong>Repos</strong> > <strong>Repositories</strong>。<br>
             <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">3</span> 選擇您的目標 <strong>Repository</strong>，然後切換到 <strong>Policies</strong> 頁籤。<br>
-            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">4</span> 捲動到下方點擊目標保護分支 (例如 <code>main</code> 或 <code>dev/1.54</code>)。<br>
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">4</span> 捲動到下方點擊目標保護分支 (例如 <code>dev/1.54</code>)。<br>
             <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">5</span> 找到 <strong>Build Validation</strong> 區塊，點擊 <strong>+ (Add)</strong>。<br>
-            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">6</span> 在 Build pipeline 下拉選單中，選擇剛剛建立的 <strong>AI Code Review Pipeline</strong> 並儲存。
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">6</span> 在 Build pipeline 下拉選單中，選擇 <strong>AI Code Review Pipeline</strong> 並儲存。
         </div>
-        <p style="margin-top: 20px; color: #aaa;">🎉 完成！以後任何人對該分支發起 Pull Request，都會自動觸發 AI 審查了！</p>
+    </div>
+
+    <div class="card" style="border-color: var(--accent);">
+        <h2 style="color: var(--accent);">💎 進階：如何將 AI 審查設為強制環節？</h2>
+        <p>若要落實「AI 沒過，人類不看」的品質管控制度，請進行以下進階設定：</p>
+        
+        <div style="margin-top: 25px;">
+            <h4 style="color: #fff; margin-bottom: 10px;">1. 啟用強制檢查 (Required)</h4>
+            <p style="font-size: 14px; color: var(--text-dim);">在 Step 4 的 Build Validation 設定中，將 <strong>Policy requirement</strong> 設定為 <span class="highlight">Required</span>。這意味著 AI 審查 Pipeline 必須成功跑完（Succeeded），PR 才能合併。</p>
+        </div>
+
+        <div style="margin-top: 25px;">
+            <h4 style="color: #fff; margin-bottom: 10px;">2. 建立「AI 先行」的人類工作流</h4>
+            <p style="font-size: 14px; color: var(--text-dim);">
+                🔹 <strong>規範</strong>：人類審查員僅在 AI 給出 <code>✔️ 建議核准</code> 且 Pipeline 變為綠燈後，才開始進行 Code Review。<br>
+                🔹 <strong>自動鎖定</strong>：如果 AI 給出 <code>❌ 建議拒絕</code>，開發者必須修正代碼並重新 Push，直到 AI 過關為止。這能將初級錯誤擋在人類審查之前，大幅節省資深人員的時間。
+            </p>
+        </div>
     </div>
 </main>
 
