@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Architecture - Module-ORD Portal</title>
+    <title>Architecture - PTC AI Code Review Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
@@ -12,7 +12,7 @@
 <body>
 
 <nav>
-    <div class="logo">Module-ORD Portal</div>
+    <div class="logo">PTC AI Code Review</div>
     <ul>
         <li><a href="index.html">🏠 系統首頁</a></li>
         <li><a href="architecture.html" class="active">🏗️ 深度架構</a></li>
@@ -24,7 +24,31 @@
 <main>
     <div class="section-header">
         <h1>🏗️ 深度架構解析</h1>
-        <p>理解 AI 決策路徑與 Kubernetes 資源調度細節。</p>
+        <p>理解 PTC AI 審查體系的決策路徑與資源調度細節。</p>
+    </div>
+
+    <div class="card">
+        <h2>🏗️ Module-ORD 專案架構</h2>
+        <p>本專案採用典型的 .NET 分層架構，實現了關注點分離 (Separation of Concerns)：</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+            <pre class="code-block" style="font-size: 13px; color: #fff; background: #111;">
+Module-ORD/
+├── GeneralOrderController (API 層)
+├── GeneralOrderService   (業務邏輯層)
+├── Repository           (數據訪問層)
+├── Common               (共享組件層)
+├── GeneralOrderUnitTest (單元測試)
+└── cicd                 (自動化腳本)
+            </pre>
+            <div style="font-size: 14px; line-height: 1.8; color: var(--text-dim);">
+                🔹 <strong style="color: var(--primary);">Controller</strong>: 負責路由分發與 API Entry Points。<br>
+                🔹 <strong style="color: var(--primary);">Service</strong>: 核心邏輯實現，採用 Interface 進行解耦。<br>
+                🔹 <strong style="color: var(--primary);">Repository</strong>: 處理 Persistence 與資料持久化。<br>
+                🔹 <strong style="color: var(--primary);">Common</strong>: 存放 DTO、Infrastructure 與共用 Helper。<br>
+                🔹 <strong style="color: var(--primary);">UnitTest</strong>: 確保代碼邏輯的正確性與穩定性。
+            </div>
+        </div>
     </div>
 
     <div class="card">
