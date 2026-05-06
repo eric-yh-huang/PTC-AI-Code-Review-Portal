@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - Module-ORD Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true, theme:'dark'});</script>
+</head>
+<body>
+
+<nav>
+    <div class="logo">Module-ORD Portal</div>
+    <ul>
+        <li><a href="index.html">🏠 系統首頁</a></li>
+        <li><a href="architecture.html" class="active">🏗️ 深度架構</a></li>
+        <li><a href="onboarding.html">🚀 接入指南</a></li>
+        <li><a href="rules.html">📜 審查規範</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="section-header">
+        <h1>🏗️ 深度架構解析</h1>
+        <p>理解 AI 決策路徑與 Kubernetes 資源調度細節。</p>
+    </div>
+
+    <div class="card">
+        <h2>🧠 AI 智審決策邏輯</h2>
+        <p>系統會根據地端資源池 (Ollama-Pool) 的在線狀態，自動切換審查模式：</p>
+        <div class="mermaid">
+        graph TD
+            A[CheckPoolStatus] --> B{isOllamaOnline?}
+            B -- "Yes" --> C[Local Dual-Review]
+            C --> C1[Qwen-Coder]
+            C1 --> C2[Gemma]
+            B -- "No" --> D[Cloud Fallback]
+            D --> D1[Vertex AI Gemini]
+            C2 --> E[Post Comments]
+            D1 --> E
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>⚡ Tekton 驗證流程</h2>
+        <p>針對技術驗證軌道，我們使用了 Tekton 定制化的 PipelineRun：</p>
+        <div class="mermaid">
+        sequenceDiagram
+            participant ADO as Azure DevOps
+            participant Tekton as Tekton API (K8s)
+            participant Pod as Runner Pod
+            ADO->>Tekton: 觸發 module-ord-validate-1
+            Tekton->>Pod: 分配運算資源
+            Pod->>Pod: 執行 Build & Test
+            Pod-->>ADO: 即時回傳日誌 (tkn logs)
+            Pod-->>ADO: 狀態回報 (Success/Fail)
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

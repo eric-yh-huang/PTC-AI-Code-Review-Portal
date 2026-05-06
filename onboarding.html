@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Guide - Module-ORD Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">Module-ORD Portal</div>
+    <ul>
+        <li><a href="index.html">🏠 系統首頁</a></li>
+        <li><a href="architecture.html">🏗️ 深度架構</a></li>
+        <li><a href="onboarding.html" class="active">🚀 接入指南</a></li>
+        <li><a href="rules.html">📜 審查規範</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="section-header">
+        <h1>🚀 接入指南</h1>
+        <p>只需三個步驟，即可讓您的儲存庫享有 AI 代碼審查服務。</p>
+    </div>
+
+    <div class="card">
+        <h2>Step 1: 建立 YAML 設定檔</h2>
+        <p>在您的儲存庫 `cicd/` 目錄下建立一個新的 YAML 檔案。您可以直接複製下方的基礎範本：</p>
+        <div class="code-block">
+# 基礎設定
+resources:
+  repositories:
+    - repository: AdminTool
+      name: Back-end/Admin Tool
+      ref: dev/1.54
+
+pr:
+  - main # 設定觸發 PR 的分支
+
+pool:
+  name: "Back-end_Self-Hosted_K8s"
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Step 2: 加入 AI 審查 Job</h2>
+        <p>將 `PtcWebScAiCodeAgent@1` 任務加入到您的 Pipeline 中。請確保正確引用 `AdminTool` 作為規則來源：</p>
+        <div class="code-block">
+- task: PtcWebScAiCodeAgent@1
+  inputs:
+    inputAiProvider: "Ollama"
+    inputOllamaModelName: "qwen3-coder:latest"
+    inputGlobalRulesPath: '$(Agent.BuildDirectory)/AdminTool/Tools/ReviewAgents/rules/backend'
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Step 3: 配置安全性權限</h2>
+        <p>確保您的 Pipeline 有權限存取下列資源：</p>
+        <ul>
+            <li>✅ **Secure File**: `websc-dev-433809-5accf54ec817.json` (用於 GCP 認證)</li>
+            <li>✅ **Variable Group**: 包含 `OllamaPoolPAT` 變數。</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>

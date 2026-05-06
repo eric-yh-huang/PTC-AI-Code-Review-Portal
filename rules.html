@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rules - Module-ORD Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">Module-ORD Portal</div>
+    <ul>
+        <li><a href="index.html">🏠 系統首頁</a></li>
+        <li><a href="architecture.html">🏗️ 深度架構</a></li>
+        <li><a href="onboarding.html">🚀 接入指南</a></li>
+        <li><a href="rules.html" class="active">📜 審查規範</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="section-header">
+        <h1>📜 審查規範與規則</h1>
+        <p>所有 AI 審查皆基於 Back-end 團隊統一維護的全域規則。</p>
+    </div>
+
+    <div class="card">
+        <h2>📂 規則存放位置</h2>
+        <p>所有的審查規則 (Prompt Rules) 統一存放在 <strong>Admin Tool</strong> 儲存庫中：</p>
+        <div class="code-block">
+Path: AdminTool/Tools/ReviewAgents/rules/backend/
+        </div>
+        <p style="margin-top: 20px;">當您需要調整 AI 的審查標準（例如新增命名規範或安全檢查項）時，只需修改該目錄下的對應檔案，所有專案將同步生效。</p>
+    </div>
+
+    <div class="card">
+        <h2>🛠️ 如何自訂規則</h2>
+        <p>若個別專案有特殊需求，可以在 Pipeline 設定中透過 `inputSystemInstruction` 加入額外的指令，但建議優先使用全域規則以維持一致性。</p>
+    </div>
+</main>
+
+</body>
+</html>
