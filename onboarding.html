@@ -65,16 +65,32 @@ steps:
     </div>
 
     <div class="card">
-        <h2>Step 3: 配置安全性權限</h2>
-        <p>確保您的 Pipeline 有權限存取下列資源：</p>
-        <ul style="margin-top: 15px; line-height: 1.8;">
-            <li>✅ <strong>Secure File</strong>: <code>websc-dev-433809-5accf54ec817.json</code> (用於 GCP Vertex AI 備援認證)</li>
-            <li>✅ <strong>Variable Group</strong>: 包含 <code>OllamaPoolPAT</code> 變數。
-                <div style="font-size: 13px; color: #f39c12; margin-left: 25px; margin-top: 5px;">
-                    ⚠️ <strong>PAT 權限範圍：</strong> 請設定為 <code>Agent Pools (Read)</code> 即可，無需其他權限。
-                </div>
-            </li>
-        </ul>
+        <h2>Step 3: 配置安全性權限與資源</h2>
+        <p>在執行 Pipeline 前，必須先在 Azure DevOps 的後台完成以下兩項配置：</p>
+        
+        <div style="margin-top: 25px;">
+            <h4 style="color: var(--primary); margin-bottom: 15px;">🛡️ 1. 上傳 GCP 認證密鑰 (Secure File)</h4>
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border: 1px dashed var(--glass-border);">
+                <p style="font-size: 14px; margin-bottom: 10px;">路徑：<span class="highlight">Pipelines</span> > <span class="highlight">Library</span> > <span class="highlight">Secure files</span> 頁籤</p>
+                <ul style="font-size: 14px; line-height: 1.8; color: var(--text-dim);">
+                    <li>點擊 <strong>+ Secure file</strong> 上傳 <code>websc-dev-433809-5accf54ec817.json</code>。</li>
+                    <li>上傳後點擊檔案進入設定，確保 <strong>Pipeline permissions</strong> 已授權給您的 Pipeline。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 25px;">
+            <h4 style="color: var(--primary); margin-bottom: 15px;">🔑 2. 設定偵測權杖 (Variable Group)</h4>
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border: 1px dashed var(--glass-border);">
+                <p style="font-size: 14px; margin-bottom: 10px;">路徑：<span class="highlight">Pipelines</span> > <span class="highlight">Library</span> > <span class="highlight">Variable groups</span> 頁籤</p>
+                <ul style="font-size: 14px; line-height: 1.8; color: var(--text-dim);">
+                    <li>建立或編輯一個群組（例如 <code>AI-Review-Vars</code>）。</li>
+                    <li>新增變數 <strong><code>OllamaPoolPAT</code></strong>。</li>
+                    <li>點擊旁邊的 🔒 圖示將其設為 <strong>Secret</strong>。</li>
+                    <li style="color: #f39c12; font-weight: 600;">⚠️ PAT 權限範圍僅需設定為：Agent Pools (Read)。</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <div class="card" style="border-color: var(--secondary);">
