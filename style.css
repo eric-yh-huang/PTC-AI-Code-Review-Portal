@@ -118,7 +118,7 @@ nav ul li a:hover, nav ul li a.active {
 main {
     margin-left: 280px;
     width: calc(100% - 280px);
-    padding: 80px 60px;
+    padding: 40px 60px;
     background: radial-gradient(circle at 10% 10%, rgba(112, 0, 255, 0.03) 0%, transparent 40%);
 }
 
