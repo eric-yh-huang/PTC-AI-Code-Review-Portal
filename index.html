@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module-ORD CI/CD & AI Review Architecture Map</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --primary: #4cc9f0;
+            --secondary: #7209b7;
+            --accent: #4895ef;
+            --text: #e0e0e0;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            background: radial-gradient(circle at top right, #1a1a2e, #0a0a0c);
+            margin: 40px 0;
+            padding: 60px;
+            box-sizing: border-box;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 5px;
+            letter-spacing: 4px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-top: 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #aaa;
+        }
+
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .step {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            font-size: 13px;
+        }
+
+        .step.alt {
+            border-left-color: var(--secondary);
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            background: var(--primary);
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        footer {
+            margin-top: auto;
+            font-size: 12px;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Page 1: Overview -->
+<div class="page">
+    <header>
+        <h1>Module-ORD Architecture</h1>
+        <div class="subtitle">CI/CD DUAL-TRACK VERIFICATION SYSTEM</div>
+    </header>
+
+    <div class="grid">
+        <div class="card" style="grid-column: span 2;">
+            <div class="tag">TOP LEVEL</div>
+            <h2>PR Trigger Hub</h2>
+            <p>當開發者發起 Pull Request 時，Azure DevOps 會並行觸發兩個關鍵流水線，確保代碼既「能跑通」又「寫得好」。</p>
+        </div>
+
+        <div class="card">
+            <h2>Track A: 技術驗證</h2>
+            <div class="flow-container">
+                <div class="step">
+                    <span class="highlight">Validation Pipeline</span><br>
+                    cicd-dev-154-validate.yaml
+                </div>
+                <div class="step">
+                    <span class="highlight">Infrastructure</span><br>
+                    Self-Hosted K8s Cluster
+                </div>
+                <div class="step">
+                    <span class="highlight">Execution Engine</span><br>
+                    Tekton Pipeline (module-ord-validate-1)
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Track B: AI 智審</h2>
+            <div class="flow-container">
+                <div class="step alt">
+                    <span class="highlight">AI Review Pipeline</span><br>
+                    ai-code-review-ord.yml
+                </div>
+                <div class="step alt">
+                    <span class="highlight">Intelligent Engine</span><br>
+                    Local Ollama + Vertex AI Cloud
+                </div>
+                <div class="step alt">
+                    <span class="highlight">Process</span><br>
+                    Dual-Model Cross Review (Qwen + Gemma)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>PAGE 01 / 03</div>
+        <div>CONFIDENTIAL - PTC WEB SC AI AGENT</div>
+    </footer>
+</div>
+
+<!-- Page 2: AI Logic -->
+<div class="page">
+    <header>
+        <h1>AI Review Intelligence</h1>
+        <div class="subtitle">MULTI-MODEL DECISION TREE & FALLBACK LOGIC</div>
+    </header>
+
+    <div class="grid">
+        <div class="card" style="grid-column: span 2;">
+            <h2>Resource Decision Logic</h2>
+            <p>系統自動偵測基礎設施狀態，實現地端高效能與雲端高可靠的無縫切換。</p>
+            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                <div style="text-align: center;">
+                    <div style="font-size: 24px;">🏢</div>
+                    <div style="font-size: 12px; margin-top: 10px;">Ollama-Pool (地端)</div>
+                    <div style="color: var(--primary); font-size: 10px;">優先選用 / 低延遲 / 免費</div>
+                </div>
+                <div style="font-size: 24px; align-self: center;">⚡</div>
+                <div style="text-align: center;">
+                    <div style="font-size: 24px;">☁️</div>
+                    <div style="font-size: 12px; margin-top: 10px;">Vertex AI (雲端)</div>
+                    <div style="color: var(--secondary); font-size: 10px;">備援選用 / 高可靠 / Gemini</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tag" style="background: var(--secondary); color: white;">PRIORITY PATH</div>
+            <h2>地端雙模型聯審</h2>
+            <div class="flow-container">
+                <div class="step">
+                    <span class="highlight">Phase 1: Qwen-Coder</span><br>
+                    專注於代碼邏輯與結構分析。
+                </div>
+                <div class="step">
+                    <span class="highlight">Phase 2: Gemma</span><br>
+                    提供獨立的第二視角，確保審查客觀性。
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tag" style="background: #f39c12; color: black;">BACKUP PATH</div>
+            <h2>雲端 Vertex 備援</h2>
+            <div class="flow-container">
+                <div class="step">
+                    <span class="highlight">Model: Gemini 3.1 Flash</span><br>
+                    當地端 Ollama 離線時自動接手。
+                </div>
+                <div class="step">
+                    <span class="highlight">Constraint: 全域規則</span><br>
+                    同步載入 AdminTool 下的後端審查規範。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div>PAGE 02 / 03</div>
+        <div>PTC AI CODE AGENT INFOGRAPHIC</div>
+    </footer>
+</div>
+
+<!-- Page 3: Validation -->
+<div class="page">
+    <header>
+        <h1>Technical Validation</h1>
+        <div class="subtitle">KUBERNETES & TEKTON EXECUTION DEPTH</div>
+    </header>
+
+    <div class="grid">
+        <div class="card" style="grid-column: span 2; height: 300px;">
+            <h2>Execution Sequence</h2>
+            <div style="padding-left: 20px; border-left: 1px dashed var(--border); margin-top: 20px;">
+                <div style="margin-bottom: 20px;">
+                    <span class="tag">01</span> <span class="highlight">Trigger Event</span><br>
+                    <small>Azure Pipeline 呼叫 Tekton Webhook 並傳遞 PR ID。</small>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <span class="tag">02</span> <span class="highlight">Gcloud Auth</span><br>
+                    <small>透過 key.json 認證並獲取 K8s 集群控制權。</small>
+                </div>
+                <div style="margin-bottom: 20px;">
+                    <span class="tag">03</span> <span class="highlight">Tekton PipelineRun</span><br>
+                    <small>建立 Pods 並執行 module-ord-validate-1。</small>
+                </div>
+                <div style="margin-bottom: 0px;">
+                    <span class="tag">04</span> <span class="highlight">Real-time Logs</span><br>
+                    <small>使用 tkn 指令將 K8s 日誌同步回傳至 Azure DevOps 介面。</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>關鍵組件</h2>
+            <p>
+                <span class="highlight">Namespace:</span> websc-kage<br>
+                <span class="highlight">Tooling:</span> kubectl, gcloud, tkn, yq, jq<br>
+                <span class="highlight">Success Condition:</span> PipelineRun Status = True
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>驗證目標</h2>
+            <p>
+                ✅ 代碼編譯正確性<br>
+                ✅ 單元測試通過率<br>
+                ✅ 靜態掃描合規性<br>
+                ✅ 環境部署相依性
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div>PAGE 03 / 03</div>
+        <div>PREMIUM TECHNICAL DOCUMENTATION</div>
+    </footer>
+</div>
+
+</body>
+</html>
