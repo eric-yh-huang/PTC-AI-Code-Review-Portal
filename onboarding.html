@@ -68,8 +68,12 @@ steps:
         <h2>Step 3: 配置安全性權限</h2>
         <p>確保您的 Pipeline 有權限存取下列資源：</p>
         <ul style="margin-top: 15px; line-height: 1.8;">
-            <li>✅ <strong>Secure File</strong>: `websc-dev-433809-5accf54ec817.json` (用於 GCP Vertex AI 備援認證)</li>
-            <li>✅ <strong>Variable Group</strong>: 包含 `OllamaPoolPAT` 變數 (用於偵測地端資源池)。</li>
+            <li>✅ <strong>Secure File</strong>: <code>websc-dev-433809-5accf54ec817.json</code> (用於 GCP Vertex AI 備援認證)</li>
+            <li>✅ <strong>Variable Group</strong>: 包含 <code>OllamaPoolPAT</code> 變數。
+                <div style="font-size: 13px; color: #f39c12; margin-left: 25px; margin-top: 5px;">
+                    ⚠️ <strong>PAT 權限範圍：</strong> 請設定為 <code>Agent Pools (Read)</code> 即可，無需其他權限。
+                </div>
+            </li>
         </ul>
     </div>
 
