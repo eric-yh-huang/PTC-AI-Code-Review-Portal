@@ -39,7 +39,19 @@
         </div>
 
         <div style="margin-top: 30px;">
-            <h4 style="color: #fff; margin-bottom: 10px;">2. 「AI 先行，人類複審」工作流</h4>
+            <h4 style="color: #fff; margin-bottom: 10px;">2. 留言強制解決機制 (Comment Resolution Policy)</h4>
+            <p style="font-size: 14px; color: var(--text-dim);">
+                透過啟動 Azure DevOps 的 <strong>Check for comment resolution</strong> 政策，
+                強制要求開發者必須針對 AI Agent 提出的每一項建議進行回覆或修正。
+            </p>
+            <ul style="font-size: 14px; color: var(--text-dim); margin-top: 10px;">
+                <li>🔒 <strong>自動鎖定</strong>：只要有一則 AI 留言尚未標記為 <code>Resolved</code>，系統將嚴禁合併。</li>
+                <li>💬 <strong>互動對話</strong>：鼓勵開發者與 AI 進行數位對話，確保每一行代碼的修改都有跡可循。</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <h4 style="color: #fff; margin-bottom: 10px;">3. 「AI 先行，人類複審」工作流</h4>
             <div style="background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 20px; border-left: 5px solid var(--accent); margin-top: 15px;">
                 <p style="font-size: 16px; line-height: 1.8;">
                     🔹 <strong>AI 第一關</strong>：AI Agent 負責攔截 80% 的初級錯誤、格式問題與邏輯漏洞。<br>
