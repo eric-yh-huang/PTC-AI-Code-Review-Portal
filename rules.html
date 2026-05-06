@@ -26,12 +26,27 @@
     </div>
 
     <div class="card">
-        <h2>📂 規則存放位置</h2>
-        <p>所有的審查規則 (Prompt Rules) 統一存放在 <strong>Admin Tool</strong> 儲存庫中：</p>
-        <pre class="code-block">
-Path: AdminTool/Tools/ReviewAgents/rules/backend/
-        </pre>
-        <p style="margin-top: 20px;">當您需要調整 AI 的審查標準（例如新增命名規範或安全檢查項）時，只需修改該目錄下的對應檔案，所有專案將同步生效。</p>
+        <h2>📂 審查基準 (Baseline) 儲存庫架構</h2>
+        <p>所有的審查規則與指令 (Prompt Rules) 統一由 <strong>Admin Tool</strong> 儲存庫進行版本管理。這確保了跨團隊審查的一致性：</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+            <pre class="code-block" style="font-size: 13px; color: #fff; background: #111;">
+AdminTool/Tools/ReviewAgents/
+├── rules/
+│   ├── backend/    (後端規則: General, Coding Standards...)
+│   ├── frontend/   (前端規則)
+│   └── infra/      (基礎設施規則)
+├── shared/         (共享資源: 格式模板, 詞彙表)
+└── pipelines/      (範例流水線與腳本)
+            </pre>
+            <div style="font-size: 14px; line-height: 1.8; color: var(--text-dim);">
+                🔹 <strong style="color: var(--primary);">Rules/Backend</strong>: 存放了從 00 到 99 編號的 Markdown 規範，AI 會依序加載這些邏輯。<br>
+                🔹 <strong style="color: var(--primary);">Shared</strong>: 定義了 <code>ReviewFormat.Template.md</code>，這決定了您在 PR 留言中看到的 UI 排版。<br>
+                🔹 <strong style="color: var(--primary);">Version Control</strong>: 所有的規則變動都需經過 PR，實現「Rules as Code」。
+            </div>
+        </div>
+        
+        <p style="margin-top: 20px;">當您在 Pipeline 中配置 <code>inputGlobalRulesPath</code> 時，實質上就是將 AI 的「思維邊界」指向了這個結構化的目錄。</p>
     </div>
 
     <div class="card">
