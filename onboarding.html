@@ -22,18 +22,20 @@
 <main>
     <div class="section-header">
         <h1>🚀 接入指南</h1>
-        <p>只需三個步驟，即可讓您的儲存庫享有 AI 代碼審查服務。</p>
+        <p>只需四個步驟，即可為您的專案綁定自動化 AI 代碼審查服務。</p>
     </div>
 
     <div class="card">
-        <h2>Step 1: 建立 YAML 設定檔</h2>
-        <p>在您的儲存庫 `cicd/` 目錄下建立一個新的 YAML 檔案。您可以直接複製下方的基礎範本：</p>
-        <div class="code-block">
-# 基礎設定
+        <h2>Step 1: 建立 YAML 與配置基準 (Baseline) 儲存庫</h2>
+        <p>在您的儲存庫 `cicd/` 目錄下建立一個新的 YAML 檔案（例如 `ai-code-review.yml`）。</p>
+        <p style="margin-top: 10px; color: #aaa;"><strong>💡 重點說明：</strong> 為了確保所有專案的審查標準一致，Pipeline 必須宣告 <code>AdminTool</code> 作為外部資源 (Resources)。這樣在執行時才能跨儲存庫讀取統一的 <strong>Code Review Baseline (審查基準與提示詞)</strong>。</p>
+        <div class="code-block" style="margin-top: 15px;">
+# 基礎設定與資源宣告
 resources:
   repositories:
-    - repository: AdminTool
-      name: Back-end/Admin Tool
+    - repository: AdminTool              # 定義識別名稱
+      type: git
+      name: Back-end/Admin Tool          # 目標儲存庫 (存放審查規則)
       ref: dev/1.54
 
 pr:
@@ -45,24 +47,44 @@ pool:
     </div>
 
     <div class="card">
-        <h2>Step 2: 加入 AI 審查 Job</h2>
-        <p>將 `PtcWebScAiCodeAgent@1` 任務加入到您的 Pipeline 中。請確保正確引用 `AdminTool` 作為規則來源：</p>
+        <h2>Step 2: 載入規則與 AI 審查 Job</h2>
+        <p>在 Pipeline 步驟中，除了主程式碼，還必須 <code>checkout: AdminTool</code> 才能讀取規則，接著再呼叫 `PtcWebScAiCodeAgent@1` 任務：</p>
         <div class="code-block">
-- task: PtcWebScAiCodeAgent@1
-  inputs:
-    inputAiProvider: "Ollama"
-    inputOllamaModelName: "qwen3-coder:latest"
-    inputGlobalRulesPath: '$(Agent.BuildDirectory)/AdminTool/Tools/ReviewAgents/rules/backend'
+steps:
+  - checkout: self       # 載入當前要被審查的 PR 程式碼
+  - checkout: AdminTool  # 載入全域審查規則
+    path: AdminTool
+
+  - task: PtcWebScAiCodeAgent@1
+    inputs:
+      inputAiProvider: "Ollama"
+      inputOllamaModelName: "qwen3-coder:latest"
+      # 指定剛剛 checkout 下來的規則路徑
+      inputGlobalRulesPath: '$(Agent.BuildDirectory)/AdminTool/Tools/ReviewAgents/rules/backend'
         </div>
     </div>
 
     <div class="card">
         <h2>Step 3: 配置安全性權限</h2>
         <p>確保您的 Pipeline 有權限存取下列資源：</p>
-        <ul>
-            <li>✅ **Secure File**: `websc-dev-433809-5accf54ec817.json` (用於 GCP 認證)</li>
-            <li>✅ **Variable Group**: 包含 `OllamaPoolPAT` 變數。</li>
+        <ul style="margin-top: 15px; line-height: 1.8;">
+            <li>✅ <strong>Secure File</strong>: `websc-dev-433809-5accf54ec817.json` (用於 GCP Vertex AI 備援認證)</li>
+            <li>✅ <strong>Variable Group</strong>: 包含 `OllamaPoolPAT` 變數 (用於偵測地端資源池)。</li>
         </ul>
+    </div>
+
+    <div class="card" style="border-color: var(--secondary);">
+        <h2 style="color: var(--secondary);">Step 4: Azure DevOps PR 策略綁定 (Build Validation)</h2>
+        <p>YAML 寫好並推送到遠端後，必須在 Azure DevOps 後台設定強制觸發，請依序操作：</p>
+        <div style="background: rgba(112, 0, 255, 0.1); padding: 20px; border-radius: 15px; margin-top: 20px; line-height: 2;">
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">1</span> 前往 <strong>Project Settings</strong> (專案設定)。<br>
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">2</span> 在左側選單點擊 <strong>Repos</strong> > <strong>Repositories</strong>。<br>
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">3</span> 選擇您的目標 <strong>Repository</strong>，然後切換到 <strong>Policies</strong> 頁籤。<br>
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">4</span> 捲動到下方點擊目標保護分支 (例如 <code>main</code> 或 <code>dev/1.54</code>)。<br>
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">5</span> 找到 <strong>Build Validation</strong> 區塊，點擊 <strong>+ (Add)</strong>。<br>
+            <span class="badge" style="background: var(--secondary); color: white; margin-right: 10px;">6</span> 在 Build pipeline 下拉選單中，選擇剛剛建立的 <strong>AI Code Review Pipeline</strong> 並儲存。
+        </div>
+        <p style="margin-top: 20px; color: #aaa;">🎉 完成！以後任何人對該分支發起 Pull Request，都會自動觸發 AI 審查了！</p>
     </div>
 </main>
 
