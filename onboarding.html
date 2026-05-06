@@ -29,7 +29,7 @@
         <h2>Step 1: 建立 YAML 與配置基準 (Baseline) 儲存庫</h2>
         <p>在您的儲存庫 `cicd/` 目錄下建立一個新的 YAML 檔案（例如 `ai-code-review.yml`）。</p>
         <p style="margin-top: 10px; color: #aaa;"><strong>💡 重點說明：</strong> 為了確保所有專案的審查標準一致，Pipeline 必須宣告 <code>AdminTool</code> 作為外部資源 (Resources)。這樣在執行時才能跨儲存庫讀取統一的 <strong>Code Review Baseline (審查基準與提示詞)</strong>。</p>
-        <div class="code-block" style="margin-top: 15px;">
+        <pre class="code-block" style="margin-top: 15px;">
 # 基礎設定與資源宣告
 resources:
   repositories:
@@ -43,13 +43,13 @@ pr:
 
 pool:
   name: "Back-end_Self-Hosted_K8s"
-        </div>
+        </pre>
     </div>
 
     <div class="card">
         <h2>Step 2: 載入規則與 AI 審查 Job</h2>
         <p>在 Pipeline 步驟中，除了主程式碼，還必須 <code>checkout: AdminTool</code> 才能讀取規則，接著再呼叫 `PtcWebScAiCodeAgent@1` 任務：</p>
-        <div class="code-block">
+        <pre class="code-block">
 steps:
   - checkout: self       # 載入當前要被審查的 PR 程式碼
   - checkout: AdminTool  # 載入全域審查規則
@@ -61,7 +61,7 @@ steps:
       inputOllamaModelName: "qwen3-coder:latest"
       # 指定剛剛 checkout 下來的規則路徑
       inputGlobalRulesPath: '$(Agent.BuildDirectory)/AdminTool/Tools/ReviewAgents/rules/backend'
-        </div>
+        </pre>
     </div>
 
     <div class="card">
