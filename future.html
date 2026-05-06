@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Roadmap - PTC AI Code Review Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">PTC AI Code Review</div>
+    <ul>
+        <li><a href="index.html">🏠 系統首頁</a></li>
+        <li><a href="architecture.html">🏗️ 深度架構</a></li>
+        <li><a href="onboarding.html">🚀 接入指南</a></li>
+        <li><a href="rules.html">📜 審查規範</a></li>
+        <li><a href="future.html" class="active">🔮 未來展望</a></li>
+    </ul>
+</nav>
+
+<main>
+    <div class="section-header">
+        <h1>🔮 未來展望</h1>
+        <p>持續進化，邁向全自動化與強制性的品質管控體系。</p>
+    </div>
+
+    <div class="card" style="border-color: var(--accent);">
+        <h2 style="color: var(--accent);">💎 願景：強制 AI 審查流程</h2>
+        <p>在未來的規劃中，我們將 AI 審查從「輔助工具」提升為「品質守門員」。以下是預計實作的強制流程：</p>
+        
+        <div style="margin-top: 30px;">
+            <h4 style="color: #fff; margin-bottom: 10px;">1. 啟用強制檢查 (Mandatory Build Validation)</h4>
+            <p style="font-size: 14px; color: var(--text-dim);">
+                透過將 Azure DevOps 的 <strong>Policy requirement</strong> 設定為 <strong>Required</strong>，
+                確保 AI 審查 Pipeline 必須成功跑完（Succeeded），該 PR 才具備合併資格。
+            </p>
+        </div>
+
+        <div style="margin-top: 30px;">
+            <h4 style="color: #fff; margin-bottom: 10px;">2. 「AI 先行，人類複審」工作流</h4>
+            <div style="background: rgba(255, 255, 255, 0.03); padding: 25px; border-radius: 20px; border-left: 5px solid var(--accent); margin-top: 15px;">
+                <p style="font-size: 16px; line-height: 1.8;">
+                    🔹 <strong>AI 第一關</strong>：AI Agent 負責攔截 80% 的初級錯誤、格式問題與邏輯漏洞。<br>
+                    🔹 <strong>自動鎖定</strong>：若 AI 給出 <code>❌ 建議拒絕</code>，系統將自動標記 PR 為不合格，開發者必須修正並重新 Push。<br>
+                    🔹 <strong>人類複審</strong>：人類審查員僅在 AI 給出 <code>✔️ 建議核准</code> 且綠燈亮起後，才介入進行高階架構與業務邏輯的確認。
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🛠️ 更多開發計畫</h2>
+        <p>除了強制流程，我們也正在評估以下功能：</p>
+        <ul>
+            <li>✅ **自適應學習**：根據人類審查員的最終修改，自動微調 AI 的審查權重。</li>
+            <li>✅ **跨專案分析**：統計 PTC 各專案的常見代碼漏洞，產出月度品質報告。</li>
+            <li>✅ **即時對話輔助**：開發者可以直接在 PR 留言中與 AI Reviewer 進行互動式討論。</li>
+        </ul>
+    </div>
+</main>
+
+</body>
+</html>
