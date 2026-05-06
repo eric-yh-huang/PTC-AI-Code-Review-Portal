@@ -80,13 +80,13 @@ steps:
         </div>
 
         <div style="margin-top: 25px;">
-            <h4 style="color: var(--primary); margin-bottom: 15px;">🔑 2. 設定偵測權杖 (Variable Group)</h4>
+            <h4 style="color: var(--primary); margin-bottom: 15px;">🔑 2. 設定偵測權杖 (Pipeline Variables)</h4>
             <div style="background: rgba(255, 255, 255, 0.03); padding: 20px; border-radius: 15px; border: 1px dashed var(--glass-border);">
-                <p style="font-size: 14px; margin-bottom: 10px;">路徑：<span class="highlight">Pipelines</span> > <span class="highlight">Library</span> > <span class="highlight">Variable groups</span> 頁籤</p>
+                <p style="font-size: 14px; margin-bottom: 10px;">路徑：進入 Pipeline 編輯畫面 > 點擊右上角 <span class="highlight">Variables</span> 按鈕</p>
                 <ul style="font-size: 14px; line-height: 1.8; color: var(--text-dim);">
-                    <li>建立或編輯一個群組（例如 <code>AI-Review-Vars</code>）。</li>
-                    <li>新增變數 <strong><code>OllamaPoolPAT</code></strong>。</li>
-                    <li>點擊旁邊的 🔒 圖示將其設為 <strong>Secret</strong>。</li>
+                    <li>點擊 <strong>+ (New variable)</strong>。</li>
+                    <li>Name 輸入 <strong><code>OllamaPoolPAT</code></strong>。</li>
+                    <li>勾選 <strong>Keep this value secret</strong> (確保權杖不外洩)。</li>
                     <li style="color: #f39c12; font-weight: 600;">⚠️ PAT 權限範圍僅需設定為：Agent Pools (Read)。</li>
                 </ul>
             </div>
